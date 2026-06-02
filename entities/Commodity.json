@@ -1,0 +1,67 @@
+{
+  "name": "Commodity",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Commodity name"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly identifier"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "crude_oil",
+        "refined_products",
+        "sulfur",
+        "industrial_feedstocks",
+        "minerals",
+        "metals"
+      ],
+      "description": "Commodity category"
+    },
+    "overview": {
+      "type": "string",
+      "description": "Brief overview of the commodity"
+    },
+    "specs": {
+      "type": "string",
+      "description": "Indicative specifications or product profile"
+    },
+    "origin_options": {
+      "type": "string",
+      "description": "Available origin regions"
+    },
+    "destination_markets": {
+      "type": "string",
+      "description": "Target destination markets"
+    },
+    "packaging_shipment": {
+      "type": "string",
+      "description": "Packaging and shipment modes"
+    },
+    "documentation_flow": {
+      "type": "string",
+      "description": "Typical documentation flow"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Hero image for the commodity"
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0,
+      "description": "Display ordering"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ]
+}

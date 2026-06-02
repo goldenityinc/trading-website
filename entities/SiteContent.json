@@ -1,0 +1,44 @@
+{
+  "name": "SiteContent",
+  "type": "object",
+  "properties": {
+    "section_key": {
+      "type": "string",
+      "description": "Unique key for the content block (e.g. hero_headline_en)"
+    },
+    "language": {
+      "type": "string",
+      "enum": [
+        "en",
+        "id",
+        "zh",
+        "ar"
+      ],
+      "default": "en",
+      "description": "Language code"
+    },
+    "content_type": {
+      "type": "string",
+      "enum": [
+        "text",
+        "rich_text",
+        "image_url",
+        "file_url"
+      ],
+      "default": "text"
+    },
+    "value": {
+      "type": "string",
+      "description": "The content value"
+    },
+    "page": {
+      "type": "string",
+      "description": "Which page this content belongs to"
+    }
+  },
+  "required": [
+    "section_key",
+    "language",
+    "value"
+  ]
+}

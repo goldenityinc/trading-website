@@ -1,0 +1,60 @@
+{
+  "name": "Insight",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Article title"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly identifier"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "market_commentary",
+        "commodity_update",
+        "logistics",
+        "regulatory",
+        "trade_intelligence"
+      ],
+      "description": "Content category"
+    },
+    "summary": {
+      "type": "string",
+      "description": "Brief summary for card display"
+    },
+    "content": {
+      "type": "string",
+      "description": "Full article content in markdown"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Featured image"
+    },
+    "publish_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Publication date"
+    },
+    "is_published": {
+      "type": "boolean",
+      "default": false
+    },
+    "language": {
+      "type": "string",
+      "enum": [
+        "en",
+        "id",
+        "zh",
+        "ar"
+      ],
+      "default": "en"
+    }
+  },
+  "required": [
+    "title",
+    "category"
+  ]
+}

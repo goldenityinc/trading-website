@@ -1,0 +1,66 @@
+{
+  "name": "Inquiry",
+  "type": "object",
+  "properties": {
+    "inquiry_type": {
+      "type": "string",
+      "enum": [
+        "buyer",
+        "seller",
+        "strategic_partnership",
+        "investor_corporate"
+      ],
+      "description": "Type of inquiry"
+    },
+    "company_name": {
+      "type": "string"
+    },
+    "contact_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "commodity_of_interest": {
+      "type": "string"
+    },
+    "volume": {
+      "type": "string"
+    },
+    "destination": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "compliance_acknowledged": {
+      "type": "boolean",
+      "default": false
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "under_review",
+        "qualified",
+        "responded",
+        "closed"
+      ],
+      "default": "new"
+    }
+  },
+  "required": [
+    "inquiry_type",
+    "company_name",
+    "contact_name",
+    "email",
+    "country"
+  ]
+}
