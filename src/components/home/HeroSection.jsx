@@ -83,11 +83,18 @@ export default function HeroSection() {
             className="mt-10 flex flex-col sm:flex-row gap-3"
           >
             <Link
-              to="/contact"
+              to="/portals"
               className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-copper text-white text-xs tracking-[0.16em] uppercase font-medium hover:bg-copper-light transition-all duration-300 group"
             >
-              {t('hero.cta_inquiry')}
+              Open Demo Portals
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-white/15 text-white/80 text-xs tracking-[0.16em] uppercase font-medium hover:border-white/30 hover:text-white transition-all duration-300"
+            >
+              {t('hero.cta_inquiry')}
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
             <Link
               to="/investor"

@@ -3,6 +3,29 @@ import { TrendingUp, Plus, AlertCircle, Package, Calendar, MapPin, CheckCircle2,
 import { Link } from 'react-router-dom';
 
 const CustomerPortal = () => {
+  const demoRole = sessionStorage.getItem('meridianDemoRole');
+
+  if (demoRole !== 'customer') {
+    return (
+      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center px-4">
+        <div className="max-w-lg w-full border border-slate-700 bg-slate-900 rounded-2xl p-8 text-center">
+          <h1 className="text-2xl font-bold mb-3">Customer Login Required</h1>
+          <p className="text-slate-300 mb-6">
+            Please login as customer first, or register and complete KYC/KYB before opening the customer portal.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link to="/auth?mode=login&role=customer" className="px-5 py-2.5 rounded-lg bg-amber-600 hover:bg-amber-700 font-semibold transition-colors">
+              Go to Login
+            </Link>
+            <Link to="/auth?mode=register&role=customer" className="px-5 py-2.5 rounded-lg border border-slate-600 hover:border-slate-500 transition-colors">
+              Register First
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const [showNewOrderModal, setShowNewOrderModal] = useState(false);
   const [formData, setFormData] = useState({
     commodity: 'Crude Oil',
@@ -131,8 +154,8 @@ const CustomerPortal = () => {
               Back to Portal Launcher
             </Link>
             <div className="flex gap-2">
-              <Link to="/internal-portal" className="bg-slate-700 hover:bg-slate-600 text-white px-3 py-1 rounded text-sm transition-colors">
-                Internal Portal
+              <Link to="/auth?mode=login&role=employee" className="bg-slate-700 hover:bg-slate-600 text-white px-3 py-1 rounded text-sm transition-colors">
+                Employee Login
               </Link>
             </div>
           </div>

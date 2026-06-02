@@ -1,153 +1,57 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Kanban, Truck, Settings, MoreVertical, Plus, TrendingUp, Archive, CheckCircle2, Clock, AlertCircle, ChevronLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { MOCK_CRM_LEADS, MOCK_ERP_LOGISTICS, MOCK_KYC_KYB_REQUESTS } from '../mockData';
+
+const KYC_QUEUE_STORAGE_KEY = 'meridianKycQueue';
 
 const InternalPortal = () => {
+  const demoRole = sessionStorage.getItem('meridianDemoRole');
+
+  if (demoRole !== 'employee') {
+    return (
+      <div className="min-h-screen bg-slate-100 text-slate-900 flex items-center justify-center px-4">
+        <div className="max-w-lg w-full border border-slate-300 bg-white rounded-2xl p-8 text-center shadow-sm">
+          <h1 className="text-2xl font-bold mb-3">Employee Login Required</h1>
+          <p className="text-slate-600 mb-6">
+            Please login as karyawan before accessing CRM and ERP internal workflow.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link to="/auth?mode=login&role=employee" className="px-5 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors">
+              Go to Employee Login
+            </Link>
+            <Link to="/portals" className="px-5 py-2.5 rounded-lg border border-slate-300 hover:border-slate-400 transition-colors">
+              Back to Portals
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const [activeTab, setActiveTab] = useState('crm');
   const [toastMessage, setToastMessage] = useState(null);
-  const [crmLeads] = useState([
-    {
-      id: 'INQ-001',
-      companyName: 'Global Energy Solutions',
-      inquiryDate: '2025-06-01',
-      commodityInterest: 'Crude Oil, Natural Gas',
-      contactPerson: 'John Martinez',
-      email: 'john@globalenergy.com',
-      status: 'New Inquiry',
-      volume: '10,000 bbls',
-    },
-    {
-      id: 'INQ-002',
-      companyName: 'Asian Metals Corp',
-      inquiryDate: '2025-05-28',
-      commodityInterest: 'Iron Ore, Copper',
-      contactPerson: 'Li Chen',
-      email: 'li.chen@asianmetals.com',
-      status: 'KYC Review',
-      volume: '75,000 MT',
-    },
-    {
-      id: 'INQ-003',
-      companyName: 'European Industrial Group',
-      inquiryDate: '2025-05-25',
-      commodityInterest: 'Coal, Minerals',
-      contactPerson: 'Hans Mueller',
-      email: 'hans@euindustrial.de',
-      status: 'Quotation',
-      volume: '50,000 MT',
-    },
-    {
-      id: 'INQ-004',
-      companyName: 'Pacific Trade Partners',
-      inquiryDate: '2025-05-20',
-      commodityInterest: 'Natural Gas',
-      contactPerson: 'Sarah Wong',
-      email: 'sarah@pacifictrade.sg',
-      status: 'KYC Review',
-      volume: '5,000 MMBtu',
-    },
-    {
-      id: 'INQ-005',
-      companyName: 'Middle East Resources',
-      inquiryDate: '2025-05-15',
-      commodityInterest: 'Crude Oil',
-      contactPerson: 'Ahmed Al-Rashid',
-      email: 'ahmed@meresources.ae',
-      status: 'Deal Closed',
-      volume: '20,000 bbls',
-    },
-    {
-      id: 'INQ-006',
-      companyName: 'Africa Commodities Ltd',
-      inquiryDate: '2025-06-02',
-      commodityInterest: 'Minerals, Copper',
-      contactPerson: 'Amara Okafor',
-      email: 'amara@africacommodities.ng',
-      status: 'New Inquiry',
-      volume: '30,000 MT',
-    },
-  ]);
+  const [crmLeads] = useState(MOCK_CRM_LEADS);
+  const [erpShipments] = useState(MOCK_ERP_LOGISTICS);
+  const [kycQueue, setKycQueue] = useState(MOCK_KYC_KYB_REQUESTS);
 
-  const [erpShipments] = useState([
-    {
-      shipmentId: 'SHIP-2025-001',
-      client: 'Acme Corp',
-      commodity: 'Crude Oil (Brent)',
-      supplier: 'Saudi Aramco',
-      quantity: '5,000 bbls',
-      vesselName: 'MT Arabian Breeze',
-      vesselStatus: 'In Transit',
-      departure: '2025-05-25',
-      eta: '2025-06-15',
-      documentStatus: 'Complete',
-      lc_status: 'Confirmed',
-    },
-    {
-      shipmentId: 'SHIP-2025-002',
-      client: 'Asian Metals Corp',
-      commodity: 'Iron Ore (62% Fe)',
-      supplier: 'Vale Brazil',
-      quantity: '50,000 MT',
-      vesselName: 'Bulk Carrier Fortuna',
-      vesselStatus: 'At Port - Loading',
-      departure: '2025-06-05',
-      eta: '2025-07-20',
-      documentStatus: 'In Progress',
-      lc_status: 'Pending',
-    },
-    {
-      shipmentId: 'SHIP-2025-003',
-      client: 'Global Energy Solutions',
-      commodity: 'Natural Gas (LNG)',
-      supplier: 'Qatar Petroleum',
-      quantity: '1,000 MMBtu',
-      vesselName: 'LNG Carrier Doha Explorer',
-      vesselStatus: 'At Loading Terminal',
-      departure: '2025-06-08',
-      eta: '2025-06-28',
-      documentStatus: 'Complete',
-      lc_status: 'Confirmed',
-    },
-    {
-      shipmentId: 'SHIP-2025-004',
-      client: 'European Industrial Group',
-      commodity: 'Coal (Thermal)',
-      supplier: 'Indonesian Mining',
-      quantity: '100,000 MT',
-      vesselName: 'Bulk Carrier Supreme',
-      vesselStatus: 'Scheduled',
-      departure: '2025-07-01',
-      eta: '2025-08-10',
-      documentStatus: 'Pending',
-      lc_status: 'Review',
-    },
-    {
-      shipmentId: 'SHIP-2025-005',
-      client: 'Pacific Trade Partners',
-      commodity: 'Copper (Grade A)',
-      supplier: 'Peru Copper Mining',
-      quantity: '250 MT',
-      vesselName: 'Container Ship Pacific',
-      vesselStatus: 'In Transit',
-      departure: '2025-06-01',
-      eta: '2025-06-22',
-      documentStatus: 'Complete',
-      lc_status: 'Confirmed',
-    },
-    {
-      shipmentId: 'SHIP-2025-006',
-      client: 'Middle East Resources',
-      commodity: 'Crude Oil (WTI)',
-      supplier: 'US Energy Corp',
-      quantity: '20,000 bbls',
-      vesselName: 'MT Gulf Stream',
-      vesselStatus: 'Delivered',
-      departure: '2025-05-10',
-      eta: '2025-05-30',
-      documentStatus: 'Complete',
-      lc_status: 'Settled',
-    },
-  ]);
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(KYC_QUEUE_STORAGE_KEY);
+      if (!raw) {
+        localStorage.setItem(KYC_QUEUE_STORAGE_KEY, JSON.stringify(MOCK_KYC_KYB_REQUESTS));
+        setKycQueue(MOCK_KYC_KYB_REQUESTS);
+        return;
+      }
+
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        setKycQueue(parsed);
+      }
+    } catch (error) {
+      setKycQueue(MOCK_KYC_KYB_REQUESTS);
+    }
+  }, []);
 
   const kanbanColumns = [
     {
@@ -191,6 +95,39 @@ const InternalPortal = () => {
     setTimeout(() => {
       setToastMessage(null);
     }, 3000);
+  };
+
+  const updateKycQueue = (id, nextStatus) => {
+    const next = kycQueue.map((item) => {
+      if (item.id !== id) {
+        return item;
+      }
+
+      return {
+        ...item,
+        status: nextStatus,
+      };
+    });
+
+    setKycQueue(next);
+    localStorage.setItem(KYC_QUEUE_STORAGE_KEY, JSON.stringify(next));
+    setToastMessage(`KYC/KYB request ${id} updated to ${nextStatus}.`);
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 3000);
+  };
+
+  const getKycStatusColor = (status) => {
+    switch (status) {
+      case 'Approved':
+        return 'bg-green-100 text-green-700';
+      case 'Rejected':
+        return 'bg-red-100 text-red-700';
+      case 'Pending Review':
+        return 'bg-yellow-100 text-yellow-700';
+      default:
+        return 'bg-slate-100 text-slate-700';
+    }
   };
 
   const getVesselStatusColor = (status) => {
@@ -249,8 +186,8 @@ const InternalPortal = () => {
               Back to Portal Launcher
             </Link>
             <div className="flex gap-2">
-              <Link to="/customer-portal" className="bg-gray-200 hover:bg-gray-300 text-gray-900 px-3 py-1 rounded text-sm transition-colors">
-                Customer Portal
+              <Link to="/auth?mode=login&role=customer" className="bg-gray-200 hover:bg-gray-300 text-gray-900 px-3 py-1 rounded text-sm transition-colors">
+                Customer Login
               </Link>
             </div>
           </div>
@@ -303,6 +240,58 @@ const InternalPortal = () => {
               <h2 className="text-xl font-bold text-gray-900">Sales Pipeline - Inquiries</h2>
               <div className="text-sm text-gray-600">
                 Total Leads: <span className="font-semibold text-gray-900">{crmLeads.length}</span>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden mb-4">
+              <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+                <h3 className="font-semibold text-gray-900">KYC / KYB Review Queue</h3>
+                <span className="text-sm text-gray-600">Open Items: {kycQueue.filter((item) => item.status === 'Pending Review').length}</span>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead className="bg-slate-50">
+                    <tr>
+                      <th className="px-4 py-2 text-left text-xs font-semibold text-slate-600 uppercase">Request ID</th>
+                      <th className="px-4 py-2 text-left text-xs font-semibold text-slate-600 uppercase">Company</th>
+                      <th className="px-4 py-2 text-left text-xs font-semibold text-slate-600 uppercase">Type</th>
+                      <th className="px-4 py-2 text-left text-xs font-semibold text-slate-600 uppercase">Submitted</th>
+                      <th className="px-4 py-2 text-left text-xs font-semibold text-slate-600 uppercase">Status</th>
+                      <th className="px-4 py-2 text-left text-xs font-semibold text-slate-600 uppercase">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {kycQueue.map((item) => (
+                      <tr key={item.id} className="border-b border-gray-100 hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-2 font-mono text-blue-700">{item.id}</td>
+                        <td className="px-4 py-2 text-gray-800">{item.companyName}</td>
+                        <td className="px-4 py-2 text-gray-700">{item.entityType}</td>
+                        <td className="px-4 py-2 text-gray-700">{item.submittedAt}</td>
+                        <td className="px-4 py-2">
+                          <span className={`inline-flex rounded-full px-2 py-1 text-xs font-medium ${getKycStatusColor(item.status)}`}>
+                            {item.status}
+                          </span>
+                        </td>
+                        <td className="px-4 py-2">
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => updateKycQueue(item.id, 'Approved')}
+                              className="px-2 py-1 text-xs rounded bg-emerald-600 hover:bg-emerald-700 text-white transition-colors"
+                            >
+                              Approve
+                            </button>
+                            <button
+                              onClick={() => updateKycQueue(item.id, 'Rejected')}
+                              className="px-2 py-1 text-xs rounded bg-red-600 hover:bg-red-700 text-white transition-colors"
+                            >
+                              Reject
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
 

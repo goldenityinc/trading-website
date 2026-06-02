@@ -200,3 +200,24 @@ export const MOCK_ERP_LOGISTICS = [
     lc_status: 'Settled',
   },
 ];
+
+export const MOCK_KYC_KYB_REQUESTS = [
+  {
+    id: 'KYC-2026-001',
+    companyName: 'Atlas Refining Pte Ltd',
+    email: 'ops@atlasrefining.sg',
+    entityType: 'KYC',
+    submittedAt: '2026-06-01',
+    riskLevel: 'Medium',
+    status: 'Pending Review',
+  },
+  {
+    id: 'KYB-2026-002',
+    companyName: 'Helios Mineral Resources',
+    email: 'legal@heliosminerals.com',
+    entityType: 'KYB',
+    submittedAt: '2026-06-02',
+    riskLevel: 'Low',
+    status: 'Pending Review',
+  },
+];

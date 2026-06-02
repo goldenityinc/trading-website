@@ -63,10 +63,10 @@ const PortalLauncher = () => {
             </ul>
 
             <Link
-              to="/customer-portal"
+              to="/auth?mode=login&role=customer"
               className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors group"
             >
-              Launch Portal
+              Login as Customer
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -109,10 +109,10 @@ const PortalLauncher = () => {
             </ul>
 
             <Link
-              to="/internal-portal"
+              to="/auth?mode=login&role=employee"
               className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors group"
             >
-              Launch Portal
+              Login as Karyawan
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>

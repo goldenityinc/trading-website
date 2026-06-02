@@ -20,6 +20,8 @@ import Contact from './pages/Contact';
 import CustomerPortal from './components/CustomerPortal';
 import InternalPortal from './components/InternalPortal';
 import PortalLauncher from './components/PortalLauncher';
+import AuthPortal from './components/AuthPortal';
+import KycForm from './components/KycForm';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -61,6 +63,8 @@ const AuthenticatedApp = () => {
       </Route>
       {/* Demo Portals */}
       <Route path="/portals" element={<PortalLauncher />} />
+      <Route path="/auth" element={<AuthPortal />} />
+      <Route path="/kyc-form" element={<KycForm />} />
       <Route path="/customer-portal" element={<CustomerPortal />} />
       <Route path="/internal-portal" element={<InternalPortal />} />
       <Route path="*" element={<PageNotFound />} />

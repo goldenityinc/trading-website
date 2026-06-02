@@ -66,6 +66,22 @@ export default function Header() {
 
           {/* Right */}
           <div className="flex items-center gap-2">
+            {/* Auth */}
+            <div className="hidden md:flex items-center gap-1">
+              <Link
+                to="/auth?mode=login&role=customer"
+                className="inline-flex items-center px-3.5 py-1.5 border border-white/15 text-white/85 text-[11px] tracking-[0.12em] uppercase font-medium hover:border-white/30 hover:text-white transition-all duration-300"
+              >
+                Login
+              </Link>
+              <Link
+                to="/auth?mode=register&role=customer"
+                className="inline-flex items-center px-3.5 py-1.5 border border-copper/60 text-copper text-[11px] tracking-[0.12em] uppercase font-medium hover:bg-copper hover:text-white hover:border-copper transition-all duration-300"
+              >
+                Register
+              </Link>
+            </div>
+
             {/* Language */}
             <div className="relative">
               <button
@@ -153,6 +169,20 @@ export default function Header() {
               >
                 Submit Inquiry
               </Link>
+              <div className="mt-2 grid grid-cols-2 gap-2">
+                <Link
+                  to="/auth?mode=login&role=customer"
+                  className="block px-4 py-2.5 border border-white/15 text-white/90 text-center text-xs tracking-[0.12em] uppercase font-medium"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/auth?mode=register&role=customer"
+                  className="block px-4 py-2.5 border border-copper/60 text-copper text-center text-xs tracking-[0.12em] uppercase font-medium"
+                >
+                  Register
+                </Link>
+              </div>
             </nav>
           </motion.div>
         )}
